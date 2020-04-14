@@ -1,32 +1,73 @@
-<div class="container">
+<div class="container animated bounceIn">
     <div class="row d-flex justify-content-center my-5">
-        <div class="col-12 col-md-6 shadow-lg p-3 rounded">
-            <h3 class="text-center">¡Ingresa al chat con una cuenta!</h3>
-            <hr>
+        <div [ngClass]="{'fondoLogin': !chatService.darkMode, 'bg-dark': chatService.darkMode}" class="col-12 col-md-6 shadow-lg p-3 rounded">
+            <h3 [ngClass]="{'text-light': chatService.darkMode}" class="text-center">¡Ingresa al chat con una cuenta!</h3>
+            <hr [ngClass]="{'border-white': chatService.darkMode}">
             <div class="row d-flex justify-content-center">
-                <div class="col-10 col-md-8 p-3 p-md-5 bg-dark rounded">
+                <div class="col-10 p-3 px-md-5 pb-md-5 pt-md-3">
                     <div class="row">
-                        <div class="col-12">
-                            <button (click)="ingresar('google')" class="btn btn-danger btn-block mb-3" disabled>
+                        <!-- <div class="col-12">
+                            <button (click)="ingresar('google')" class="btn btn-danger btn-block mb-3 shadow" disabled>
                                 <i class="fa fa-google" aria-hidden="true"></i>
                                 Ingresar con Google <small>Próximamente</small>
                             </button>
                         </div>
                         <div class="col-12">
-                            <button (click)="ingresar('twitter')" class="btn btn-primary btn-block mb-3" disabled>
+                            <button (click)="ingresar('twitter')" class="btn btn-primary btn-block mb-3 shadow" disabled>
                                 <i class="fa fa-twitter" aria-hidden="true"></i>
                                 Ingresar con Twitter <small>Próximamente</small>
                             </button>
-                        </div>
+                        </div> -->
+                        <p class="lead text-center w-100" [ngClass]="{'text-white': chatService.darkMode}">¿De qué se trata?</p>
+                        <p class="lead mb-0" [ngClass]="{'text-white': chatService.darkMode}">
+                            Ésto es un chat realizado con el fin de entretener, desarrollado en el framework Angular.
+                        </p>
+                        <p class="lead" [ngClass]="{'text-white': chatService.darkMode}">
+                            NOTA: No podrás ingresar con un nombre que ya está siendo utilizado actualmente.
+                        </p>
                         <div class="col-12">
-                            <button (click)="ingresar()" class="btn btn-light btn-block">
+                            <label [ngClass]="{'text-light': chatService.darkMode}">Elige un color para tu nombre:</label>
+                            <div class="dropdown w-100 mb-2">
+                                <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  {{ usuario.color | colorBadge }}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <a (click)="usuario.color = 'badge-dark'" class="dropdown-item" href="#">Negro</a>
+                                  <a (click)="usuario.color = 'badge-light'" class="dropdown-item" href="#">Blanco</a>
+                                  <a (click)="usuario.color = 'badge-primary'" class="dropdown-item" href="#">Azul</a>
+                                  <a (click)="usuario.color = 'badge-success'" class="dropdown-item" href="#">Verde</a>
+                                  <a (click)="usuario.color = 'badge-danger'" class="dropdown-item" href="#">Rojo</a>
+                                  <a (click)="usuario.color = 'badge-warning'" class="dropdown-item" href="#">Amarillo</a>
+                                  <a (click)="usuario.color = 'badge-secondary'" class="dropdown-item" href="#">Gris</a>
+                                  <a (click)="usuario.color = 'badge-info'" class="dropdown-item" href="#">Celeste</a>
+                                </div>
+                              </div>
+
+                            <input [(ngModel)]="usuario.nombre"
+                                    type="text" class="form-control" placeholder="Ingresá tu nombre" 
+                                    [ngClass]="{'bg-dark btnEnviarDark text-white': chatService.darkMode, 'btnEnviar': !chatService.darkMode}">
+                                    
+                            <button (click)="ingresar()" class="btn btn-block shadow mt-2" [ngClass]="{'btn-dark': !chatService.darkMode,'btn-light': chatService.darkMode}">
                                 <i class="fa fa-user-secret" aria-hidden="true"></i>
-                                Ingresar sin cuenta
+                                Ingresar anónimo
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+
+<div *ngIf="mensajeError.length > 0" class="position-absolute w-50 m-auto" style="top: 30vh; bottom: 0; left: 0; right: 0;">
+    <div class="bg-danger p-5 shadow-lg rounded">
+        <h3 class="display-4 d-none d-md-block text-center mb-3">
+            {{ mensajeError}}
+        </h3>
+        <p class="lead d-md-none d-block text-center mb-2 text-white">
+            {{mensajeError}}
+        </p>
+        <button (click)="mensajeError = ''" class="btn btn-dark d-block mx-auto" type="button">Ok</button>
     </div>
 </div>

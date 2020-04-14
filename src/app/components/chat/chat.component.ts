@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 // Imports agregados en el curso:
 import { ChatService } from '../../services/chat.service';
 
@@ -7,14 +7,11 @@ import { ChatService } from '../../services/chat.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
-  nombre: string;
+export class ChatComponent implements OnInit, OnDestroy {
   mensaje = '';
   elemento: any;
 
-  colorClaseNombre = '';
-
-  cambiarNombre = true;
+  noPuedeEnviar = false;
   mensajeError = '';
 
   constructor(public chatService: ChatService) {
@@ -27,46 +24,62 @@ export class ChatComponent implements OnInit {
       }, 20);
 
     });
-    if (chatService.usuario.uid) {
-      this.nombre = chatService.usuario.nombre;
-    }
+
+    // if (chatService.usuario.uid) {
+    //   this.nombre = chatService.usuario.nombre;
+    // }
 
   }
   ngOnInit() {
     this.elemento = document.getElementById('app-mensajes');
   }
 
-  comprobarUser(nuevoNombre: string) {
-    if (this.chatService.chats.find(chat => chat.nombre === nuevoNombre)) {
-      nuevoNombre = '';
-      this.mensajeError = 'Ya existe un usuario con ese nombre';
-    } else {
-      this.nombre = nuevoNombre;
-      this.cambiarNombre = false;
-    }
-  }
-
-
-
   enviarMensaje() {
-    if (this.chatService.usuario.uid === 'anon') {
-      if (this.mensaje.length === 0 || !this.nombre || this.nombre.length === 0) {
-        this.mensajeError = 'No has ingresado un mensaje o no tienes nombre';
-        return;
-      } else {
-        this.enviar(this.mensaje, this.nombre);
-      }
+    // if (this.chatService.usuario.uid === 'anon') {
+    if (this.mensaje.length === 0) {
+      this.mensajeError = 'No has ingresado un mensaje';
+      return;
     } else {
       this.enviar(this.mensaje);
     }
+    // } else {
+    //   this.enviar(this.mensaje);
+    // }
   }
 
-  enviar(mens: string, nombre?: string) {
-    this.chatService.agregarMensaje(mens, nombre).then(() => {
+  enviar(mens: string) {
+    if (this.noPuedeEnviar) { return; }
+    this.chatService.agregarMensaje(mens).then(() => {
       console.log('Mensaje enviado');
       this.mensaje = '';
+
+      this.noPuedeEnviar = true;
+      setTimeout(() => {
+        this.noPuedeEnviar = false;
+      }, 2000);
+
     }).catch((err) => {
       console.error('Error al enviar', err);
     });
   }
+
+  ngOnDestroy() {
+    this.chatService.logout();
+  }
+
+  estaConectado(nombreUser: string) {
+    return this.chatService.users.find(u => u.nombre === nombreUser);
+  }
+
+  // getColorDelUserDelChat(nombreUser: string) {
+  //   this.chatService.users.forEach(user => {
+  //     console.log(user);
+
+  //     if (user.nombre === nombreUser) {
+  //       console.log(user.color);
+
+  //       return user.color;
+  //     }
+  //   });
+  // }
 }

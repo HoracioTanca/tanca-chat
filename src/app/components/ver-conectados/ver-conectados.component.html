@@ -1,0 +1,11 @@
+<div class="container animated bounceInDown">
+    <div class="row d-flex justify-content-center">
+        <div class="col-8">
+            <ul class="list-group">
+                <li *ngFor="let user of chatService.users" class="list-group-item" [ngClass]="{'list-group-item-dark': chatService.darkMode}">
+                    {{user.nombre}} <i class="fa fa-circle" aria-hidden="true" [ngClass]="{'text-success': estaConectado(user)}"></i>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

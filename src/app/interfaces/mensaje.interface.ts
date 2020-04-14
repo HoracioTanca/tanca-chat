@@ -4,4 +4,5 @@ export interface Mensaje {
     imgPerfil?: string;
     fecha?: number;
     uid?: string;
+    color?: string;
 }

@@ -12,12 +12,16 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { ChatComponent } from './components/chat/chat.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { VerConectadosComponent } from './components/ver-conectados/ver-conectados.component';
+import { ColorBadgePipe } from './pipes/color-badge.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChatComponent,
-    LoginComponent
+    LoginComponent,
+    VerConectadosComponent,
+    ColorBadgePipe
   ],
   imports: [
     BrowserModule,
