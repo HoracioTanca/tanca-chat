@@ -41,8 +41,9 @@
                     <div *ngIf="nombre !== chat.nombre" class="row px-3 my-1">
                         <div class="bg-dark rounded p-1">
                             <div>
+<!--                                 
                                 <img *ngIf="chat.imgPerfil" [src]="chat.imgPerfil" alt="perfil" class="img-fluid rounded-circle imgPerfil">
-                                <img *ngIf="!chat.imgPerfil" src="../../../assets/img/perfil.jpg" alt="perfil" class="img-fluid rounded-circle imgPerfil">
+                                <img *ngIf="!chat.imgPerfil" src="../../../assets/img/perfil.jpg" alt="perfil" class="img-fluid rounded-circle imgPerfil"> -->
                                 <div class="float-right pl-1">
                                     <span class="badge badge-pill badge-info">
                                         {{ chat.nombre }}
@@ -56,9 +57,9 @@
                     
                     <div *ngIf="nombre === chat.nombre || chatService.usuario.nombre === chat.nombre" class="row d-flex align-items-end text-right px-3 my-1">
                         <div class="bg-info rounded p-1 ml-auto">
-
+<!-- 
                             <img *ngIf="chat.imgPerfil" [src]="chat.imgPerfil" alt="perfil" class="img-fluid rounded-circle imgPerfil">
-                            <img *ngIf="!chat.imgPerfil" src="../../../assets/img/perfil.jpg" alt="perfil" class="img-fluid rounded-circle imgPerfil">
+                            <img *ngIf="!chat.imgPerfil" src="../../../assets/img/perfil.jpg" alt="perfil" class="img-fluid rounded-circle imgPerfil"> -->
                             <div class="float-left pr-1">
                                 <span class="badge badge-pill badge-dark">{{ chat.nombre }}</span>
                                 <p class="lead text-white mb-0" style="font-size: 16px;">{{ chat.mensaje }}</p>
@@ -125,7 +126,7 @@
             </div>
         </div>
         
-
+        <small>Chat desarrollado por Horacio Tanca</small>
 
 
       </div>
