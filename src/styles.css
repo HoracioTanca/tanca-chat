@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+.logo{
+    font-family: monospace;
+    font-size: 29px;
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 600px){
+    .logo{
+        font-size: 18px;
+    }
+}

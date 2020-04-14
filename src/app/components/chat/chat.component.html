@@ -1,0 +1,147 @@
+<div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-md-6 p-3 shadow border rounded my-2 my-md-5">
+
+        <h3 class="display-4 d-sm-block d-none text-center">
+            ¡Chat global!
+        </h3>
+        <h4 class="d-block d-sm-none text-center">
+            ¡Chat global!
+        </h4>
+        <p class="lead text-center">Estás invitado a escribir tus mensajes en éste chat global</p>
+
+        <div *ngIf="!cambiarNombre && chatService.usuario.uid === 'anon'" class="row">
+            <div class="col-8 d-flex align-items-center">
+                <p class="lead my-auto">{{ nombre }}</p>
+                <p *ngIf="!nombre || nombre.length === 0" class="lead text-danger m-0" style="font-size: 16px;">No tienes nombre</p>
+            </div>
+            <div class="col-4 p-0 d-flex align-items-center">
+                <button (click)="cambiarNombre = true" class="btn btn-primary">Cambiar nombre</button>
+            </div>
+        </div>
+       
+        <div *ngIf="cambiarNombre && chatService.usuario.uid === 'anon'" class="row">
+            <div class="col-12 col-sm-7 mb-2">
+                <input #inputNombre (keyup.enter)="comprobarUser(inputNombre.value)" type="text" class="form-control" placeholder="Ingresá tu nombre">
+            </div>
+            <div class="col-8 col-sm-3 pr-0 p-sm-0">
+                <button (click)="comprobarUser(inputNombre.value)" class="btn btn-success w-100">Cambiar</button>
+            </div>
+            <div class="col-4 col-sm-2">
+                <button (click)="cambiarNombre = false" class="btn btn-danger w-100"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row px-4 pb-4">
+            <div id="app-mensajes" class="col-12 rounded border border-success py-2" style="height: 400px;">
+                
+                <div *ngFor="let chat of chatService.chats; let i = index" >
+
+                    <div *ngIf="nombre !== chat.nombre" class="row px-3 my-1">
+                        <div class="bg-dark rounded p-1">
+                            <div>
+                                <img *ngIf="chat.imgPerfil" [src]="chat.imgPerfil" alt="perfil" class="img-fluid rounded-circle imgPerfil">
+                                <img *ngIf="!chat.imgPerfil" src="../../../assets/img/perfil.jpg" alt="perfil" class="img-fluid rounded-circle imgPerfil">
+                                <div class="float-right pl-1">
+                                    <span class="badge badge-pill badge-info">
+                                        {{ chat.nombre }}
+                                    </span>
+                                    <p class="lead text-white mb-0" style="font-size: 14px;">{{ chat.mensaje }}</p>
+                                    <!-- <small class="text-light" style="font-size: 11px;">{{ chat.fecha }}</small> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div *ngIf="nombre === chat.nombre || chatService.usuario.nombre === chat.nombre" class="row d-flex align-items-end text-right px-3 my-1">
+                        <div class="bg-info rounded p-1 ml-auto">
+
+                            <img *ngIf="chat.imgPerfil" [src]="chat.imgPerfil" alt="perfil" class="img-fluid rounded-circle imgPerfil">
+                            <img *ngIf="!chat.imgPerfil" src="../../../assets/img/perfil.jpg" alt="perfil" class="img-fluid rounded-circle imgPerfil">
+                            <div class="float-left pr-1">
+                                <span class="badge badge-pill badge-dark">{{ chat.nombre }}</span>
+                                <p class="lead text-white mb-0" style="font-size: 16px;">{{ chat.mensaje }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+        
+        
+           <!-- <div class="row px-3 my-1">
+                    <div class="bg-dark rounded p-1">
+                        <span class="badge badge-pill badge-info">Horacio Tanca</span>
+                        <p class="lead text-white mb-0" style="font-size: 16px;">Hola como estan todos putos</p>
+                    </div>
+                </div>
+        
+                <div class="row d-flex align-items-end text-right px-3 my-1">
+                    <div class="bg-info rounded p-1 ml-auto">
+                        <span class="badge badge-pill badge-dark">iLeon001</span>
+                        <p class="lead text-white mb-0" style="font-size: 16px;">Uhhh tan todos locoo acá viejo</p>
+                    </div>
+                </div> -->
+        <!-- 
+                <div class="row px-3 my-1">
+                    <div class="bg-dark rounded p-1">
+                        <span class="badge badge-pill badge-danger">Juan Tanca</span>
+                        <p class="lead text-white mb-0" style="font-size: 16px;">Hola brooos</p>
+                    </div>
+                </div>
+                <div class="row px-3 my-1">
+                    <div class="bg-dark rounded p-1">
+                        <span class="badge badge-pill badge-success">unPibeCualquiera</span>
+                        <p class="lead text-white mb-0" style="font-size: 16px;">HOLA WACHOOOOOOOOSSS</p>
+                    </div>
+                </div>
+                <div class="row px-3 my-1">
+                    <div class="bg-dark rounded p-1">
+                        <span class="badge badge-pill badge-secondary">Un Seco Bárbaro</span>
+                        <p class="lead text-white mb-0" style="font-size: 16px;">Ah no pero esto no es pa cualquiera dejá de agitá</p>
+                    </div>
+                </div>
+        
+        
+            </div> -->
+        
+            </div>
+            <div class="col-12 px-0 mt-2">
+                <div class="row">
+                    <div class="col-10 pr-1">
+                        <input (keyup.enter)="enviarMensaje()" 
+                        [(ngModel)]="mensaje" 
+                        name="mensaje"
+                        class="form-control border-primary shadow"
+                        type="text"
+                        placeholder="Escribe tu mensaje aquí...">
+                    </div>
+                    <div class="col-2 pl-0">
+                        <button (click)="enviarMensaje()" type="button" class="border border-primary btn rounded shadow w-100 h-100 p-0">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+<div *ngIf="mensajeError.length > 0" class="position-absolute w-50 m-auto" style="top: 30vh; bottom: 0; left: 0; right: 0;">
+    <div class="bg-danger p-5 shadow-lg rounded">
+        <h3 class="display-4 d-none d-md-block text-center mb-3">
+            {{ mensajeError}}
+        </h3>
+        <p class="lead d-md-none d-block text-center mb-2 text-white">
+            {{mensajeError}}
+        </p>
+        <button (click)="mensajeError = ''" class="btn btn-dark d-block mx-auto" type="button">Ok</button>
+    </div>
+</div>
